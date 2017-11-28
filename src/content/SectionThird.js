@@ -70,6 +70,30 @@ class Form extends Component {
 
     handleSubmit(event) {
         this.setState({display_visible: !this.state.display_visible});
+        let nodemailer = require('nodemailer');
+
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'youremail@gmail.com',
+                pass: 'yourpassword'
+            }
+        });
+
+        let mailOptions = {
+            from: 'youremail@gmail.com',
+            to: 'myfriend@yahoo.com',
+            subject: 'Sending Email using Node.js',
+            text: 'That was easy!'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
         alert('Name: ' + this.state.valueName + ' Email: ' + this.state.valueEmail + ' Message: ' + this.state.valueMessage);
         event.preventDefault();
     }

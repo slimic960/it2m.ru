@@ -50,7 +50,7 @@ class FooterAdress extends Component {
         return (
             <div style={style.footerInfoPosition}>
                 <p style={style.infoStyle}>НАШ ОСНОВНОЙ АДРЕС:</p>
-                <span style={style.infoStyle}>{recentsIcon} Телефон: +7 800-555-35-35</span>
+                <span style={style.infoStyle}>{recentsIcon} Телефон: +7 900-112-31-19</span>
                 <span style={style.infoStyle}>{favoritesIcon} Адрес: г.Тверь ш.Санкт-Петербургское, 53а </span>
                 <span style={style.infoStyle}>{emailIcon} E-mail: it2m@mail.ru</span>
             </div>
