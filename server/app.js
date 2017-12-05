@@ -55,5 +55,5 @@ app.get('/contact', function (req, res, next) {
 
 
 app.listen(3001, function() {
-    console.log('Server running at http://127.0.0.1:3001/');
+    console.log('Server running at http://it2m.ru:3001/');
 });
