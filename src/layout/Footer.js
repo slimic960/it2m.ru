@@ -54,7 +54,7 @@ class FooterAdress extends Component {
                 <p style={style.infoStyle}>НАШ ОСНОВНОЙ АДРЕС:</p>
                 {/*<span style={style.infoStyle}>{recentsIcon} Телефон: +7 900-112-31-19</span>*/}
                 <span style={style.infoStyle}>{favoritesIcon} Адрес: г.Тверь ш.Санкт-Петербургское, 53а </span>
-                <span style={style.infoStyle}>{emailIcon} E-mail: it2m@mail.ru</span>
+                <span style={style.infoStyle}>{emailIcon} E-mail: info@it2m.ru</span>
             </div>
         );
     }
