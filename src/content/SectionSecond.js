@@ -36,7 +36,7 @@ export default SectionSecond;
 class SectionSecondIcon extends Component {
     render() {
         return (
-            <div>
+            <div className="langImgBox">
                 <IconButton
                     className="languesStyle"
                     tooltip="HTML"

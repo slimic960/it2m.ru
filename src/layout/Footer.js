@@ -5,7 +5,9 @@ import FontIcon from 'material-ui/FontIcon';
 const style = {
     navFootStyle:{
         backgroundColor: 'black',
-        height: 100,
+        paddingBottom: 20,
+        paddingTop: 20,
+        height: 'auto'
     },
     navFootButtonStyle:{
         margin: 'auto',
