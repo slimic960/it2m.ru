@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.1",
+    "google-auth-library": "^0.12.0",
+    "googleapis": "^23.0.0",
+    "handlebars": "^4.0.11",
     "material-ui": "^0.19.4",
     "nodemailer": "^4.4.0",
+    "nodemailer-smtp-transport": "^2.7.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-parallax": "^1.5.0",
     "react-scripts": "1.0.14",
-    "react-tap-event-plugin": "^3.0.2"
+    "react-tap-event-plugin": "^3.0.2",
+    "sendgrid": "^5.2.3"
   },
   "scripts": {
     "start": "PORT=3000 react-scripts start",

@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator} from 'react-material-ui-form-validator';
+import axios, { get } from "axios";
 
 const style = {
     formStyle:{
@@ -28,6 +31,7 @@ const style = {
 
 
 
+
 class SectionThird extends Component {
     render() {
         return (
@@ -45,7 +49,6 @@ class Form extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             display_visible: true,
             valueName: '',
@@ -58,61 +61,112 @@ class Form extends Component {
         this.handleChangeMessage = this.handleChangeMessage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentWillMount() {
+        ValidatorForm.addValidationRule('isNameMatch', (value) => {
+            if (value !== this.state.valueName) {
+                alert(value);
+                return false;
+            }
+            return true;
+        });
+    }
+
     handleChangeName(event) {
-        this.setState({valueName: event.target.value.substr(0, 30)});
+        this.setState({valueName: event.target.value.substr(0, 28)});
     }
     handleChangeEmail(event) {
-        this.setState({valueEmail: event.target.value.substr(0, 30)});
+        this.setState({valueEmail: event.target.value.substr(0, 50)});
     }
     handleChangeMessage(event) {
         this.setState({valueMessage: event.target.value.substr(0, 300)});
     }
 
     handleSubmit(event) {
+        let config = {
+            headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'}
+        };
+
+        axios.get('http://localhost:3001/contact', {
+            params: {
+                tName: this.state.valueName,
+                eMail: this.state.valueEmail,
+                message: this.state.valueMessage
+            },
+        }, config)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
         this.setState({display_visible: !this.state.display_visible});
-        alert('Name: ' + this.state.valueName + ' Email: ' + this.state.valueEmail + ' Message: ' + this.state.valueMessage);
+        setTimeout(function () {
+            this.setState({display_visible: !this.state.display_visible});
+        }.bind(this), 4000);
+        this.setState({
+            valueName: '',
+            valueEmail: '',
+            valueMessage: ''
+        });
         event.preventDefault();
     }
 
 
     render() {
+        const { email } = this.state.valueEmail;
+        const { textName } = this.state.valueName;
         let bgColor = this.state.display_visible ? "block" : "none";
         let bgColorCircular = this.state.display_visible ? "none" : "block";
         return (
-            <form className="orderStyle" style={style.formStyle}>
-                <h2 style={style.formStyleH1}>
-                    ОСТАВЬТЕ ЗАЯВКУ
-                </h2>
-                <div className="formField">
-                <div className="Circular">
-                    <CircularProgress size={80} thickness={5} style={{display: bgColorCircular}}/>
-                </div>
-                <TextField
-                    hintText="Ваше Имя"
-                    floatingLabelText="Ваше Имя"
-                    style={{display: bgColor}}
-                    value={this.state.valueName}
-                    onChange={this.handleChangeName}
-                /><br />
-                <TextField
-                    hintText="E-mail"
-                    floatingLabelText="E-mail"
-                    style={{display: bgColor}}
-                    value={this.state.valueEmail}
-                    onChange={this.handleChangeEmail}
-                /><br />
-                <TextField
-                    hintText="Сообщение"
-                    multiLine={true}
-                    rows={2}
-                    rowsMax={100}
-                    style={{display: bgColor}}
-                    value={this.state.valueMessage}
-                    onChange={this.handleChangeMessage}
-                /><br />
-                <RaisedButton className="buttonOrderForm" label="Отправить" primary={true} style={{display: bgColor}} onClick={this.handleSubmit.bind(this)}/>
-                </div>
-            </form>
+            <ValidatorForm
+                ref="form"
+                className="orderStyle"
+                onSubmit={this.handleSubmit.bind(this)}
+                style={style.formStyle}
+                onError={errors => console.log(errors)}>
+
+                    <h2 style={style.formStyleH1}>
+                        ОСТАВЬТЕ ЗАЯВКУ
+                    </h2>
+                    <div className="formField">
+                    <div className="Circular">
+                        <CircularProgress size={80} thickness={5} style={{display: bgColorCircular}}/>
+                    </div>
+
+                    <TextValidator
+                        floatingLabelText="Ваше Имя"
+                        onChange={this.handleChangeName}
+                        name="textName"
+                        value={this.state.valueName}
+                        style={{display: bgColor}}
+                        validators={['isNameMatch','required']}
+                        errorMessages={['Отсутствует имя', 'Обязательное поле']}
+                    /><br />
+                    <TextValidator
+                        floatingLabelText="Email"
+                        onChange={this.handleChangeEmail}
+                        name="email"
+                        value={this.state.valueEmail}
+                        style={{display: bgColor}}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['Обязательное поле', 'Некорректный Email']}
+                    /><br />
+                    <TextField
+                        hintText="Сообщение"
+                        multiLine={true}
+                        rows={2}
+                        rowsMax={100}
+                        style={{display: bgColor}}
+                        value={this.state.valueMessage}
+                        onChange={this.handleChangeMessage}
+                    /><br />
+                    <RaisedButton type="submit" className="buttonOrderForm" label="Отправить" primary={true} style={{display: bgColor}}/>
+
+                    </div>
+
+            </ValidatorForm>
         )
     }
 }
