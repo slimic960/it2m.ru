@@ -922,4 +922,7 @@ body {
         margin: auto;
         padding-left: 50px;
     }
+    .drop-shadow ul{
+        padding-left: 10px;
+    }
 }
