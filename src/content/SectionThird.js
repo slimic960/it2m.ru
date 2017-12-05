@@ -87,7 +87,7 @@ class Form extends Component {
             headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'}
         };
 
-        axios.get('http://it2m.ru:3001/contact', {
+        axios.get('http://it2m.ru:3001/', {
             params: {
                 tName: this.state.valueName,
                 eMail: this.state.valueEmail,

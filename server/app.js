@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/contact', function (req, res, next) {
+app.get('/', function (req, res, next) {
     if(req.query.tName != '' &&  req.query.eMail != ''){
         let transporter = nodemailer.createTransport({
         service: 'gmail',
